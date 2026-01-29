@@ -3,8 +3,11 @@
 // ===================================
 
 const CONFIG = {
-    // URL вебхука LEADTEX (замените на свой)
-    WEBHOOK_URL: 'https://rb786743.leadteh.ru/inner_webhook/4228d48d-9a90-40aa-b249-664e73405c4a',
+    // URL прокси для обхода CORS (Vercel serverless function)
+    WEBHOOK_URL: '/api/webhook',
+    
+    // Оригинальный URL вебхука LEADTEX (теперь используется в api/webhook.js)
+    // https://rb786743.leadteh.ru/inner_webhook/4228d48d-9a90-40aa-b249-664e73405c4a
     
     // Данные товара
     PRODUCT: {

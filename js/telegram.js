@@ -80,9 +80,15 @@ class TelegramApp {
     }
 
     showAlert(message) {
-        if (this.tg?.showAlert) {
+        // Проверяем доступность методов в порядке приоритета
+        if (this.tg?.showPopup) {
+            this.tg.showPopup({
+                message: message
+            });
+        } else if (this.tg?.showAlert) {
             this.tg.showAlert(message);
         } else {
+            // Fallback на стандартный alert
             alert(message);
         }
     }
