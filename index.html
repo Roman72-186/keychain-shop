@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Брелок Premium - Магазин</title>
-    
+    <title>MiniShop - Telegram Mini App</title>
+
     <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
 </head>
 <body>
     <!-- Loader -->
@@ -22,13 +22,13 @@
 
     <!-- Main Container -->
     <div id="app" class="container" style="display: none;">
-        
+
         <!-- Header -->
         <header class="header">
             <div class="header-content">
-                <div class="logo">
-                    <span class="logo-icon">🔑</span>
-                    <span class="logo-text">KeyShop</span>
+                <div class="logo" onclick="showCatalog()">
+                    <span class="logo-icon" id="shopLogo">🛍️</span>
+                    <span class="logo-text" id="shopName">MiniShop</span>
                 </div>
                 <div class="cart-icon" id="cartIcon">
                     <span class="cart-badge" id="cartBadge">0</span>
@@ -37,63 +37,59 @@
             </div>
         </header>
 
-        <!-- Product Section -->
-        <section class="product-section" id="productSection">
+        <!-- Catalog Section -->
+        <section class="catalog-section" id="catalogSection">
+            <!-- Categories -->
+            <div class="categories-scroll">
+                <div class="categories" id="categories"></div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid"></div>
+        </section>
+
+        <!-- Product Detail Section -->
+        <section class="product-section" id="productSection" style="display: none;">
             <div class="product-card">
                 <!-- Product Image Gallery -->
                 <div class="product-gallery">
+                    <button class="back-btn-float" onclick="showCatalog()">← Назад</button>
                     <div class="main-image">
-                        <img id="mainImage" src="https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=800&q=80" alt="Брелок Premium">
-                        <div class="image-badge">Хит продаж</div>
+                        <img id="mainImage" src="" alt="Product">
+                        <div class="image-badge" id="productBadge"></div>
                     </div>
-                    <div class="image-thumbnails">
-                        <img class="thumbnail active" src="https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=200&q=80" alt="Вид 1" onclick="changeImage(this)">
-                        <img class="thumbnail" src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=200&q=80" alt="Вид 2" onclick="changeImage(this)">
-                        <img class="thumbnail" src="https://images.unsplash.com/photo-1614267118677-5285ffa7b6e2?w=200&q=80" alt="Вид 3" onclick="changeImage(this)">
-                    </div>
+                    <div class="image-thumbnails" id="imageThumbnails"></div>
                 </div>
 
                 <!-- Product Info -->
                 <div class="product-info">
-                    <h1 class="product-title">Брелок Premium Edition</h1>
-                    <div class="product-rating">
-                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                        <span class="rating-text">4.9 (127 отзывов)</span>
-                    </div>
+                    <h1 class="product-title" id="productTitle"></h1>
+                    <div class="product-rating" id="productRating"></div>
 
                     <div class="price-section">
-                        <div class="price-current">990 ₽</div>
-                        <div class="price-old">1 490 ₽</div>
-                        <div class="discount-badge">-34%</div>
+                        <div class="price-current" id="productPrice"></div>
+                        <div class="price-old" id="productOldPrice"></div>
+                        <div class="discount-badge" id="productDiscount"></div>
                     </div>
 
                     <div class="product-description">
-                        <h3>Описание товара</h3>
-                        <p>
-                            Стильный металлический брелок премиум-класса. Идеально подходит для ключей от дома, 
-                            автомобиля или офиса. Прочная конструкция из нержавеющей стали обеспечивает долговечность.
-                        </p>
+                        <h3>Описание</h3>
+                        <p id="productDescription"></p>
                     </div>
 
                     <div class="product-features">
                         <h3>Характеристики</h3>
-                        <ul>
-                            <li><strong>Материал:</strong> Нержавеющая сталь</li>
-                            <li><strong>Размер:</strong> 5 × 3 см</li>
-                            <li><strong>Вес:</strong> 25 г</li>
-                            <li><strong>Цвет:</strong> Серебристый</li>
-                            <li><strong>Гарантия:</strong> 1 год</li>
-                        </ul>
+                        <ul id="productFeatures"></ul>
                     </div>
 
                     <div class="delivery-info">
                         <div class="info-item">
                             <span class="info-icon">🚚</span>
-                            <span>Бесплатная доставка от 1000 ₽</span>
+                            <span id="deliveryInfo">Бесплатная доставка от 2000 ₽</span>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">⚡</span>
-                            <span>Доставка 1-3 дня</span>
+                            <span id="deliveryDays">Доставка 1-3 дня</span>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">✅</span>
@@ -114,7 +110,7 @@
                     <!-- Add to Cart Button -->
                     <button class="btn-primary" onclick="addToCart()">
                         <span>Добавить в корзину</span>
-                        <span id="btnPrice">990 ₽</span>
+                        <span id="btnPrice">0 ₽</span>
                     </button>
                 </div>
             </div>
@@ -123,7 +119,7 @@
         <!-- Cart Section -->
         <section class="cart-section" id="cartSection" style="display: none;">
             <div class="cart-header">
-                <button class="back-btn" onclick="showProduct()">
+                <button class="back-btn" onclick="showCatalog()">
                     ← Назад
                 </button>
                 <h2>Корзина</h2>
@@ -133,7 +129,7 @@
                 <div class="empty-icon">🛒</div>
                 <h3>Корзина пуста</h3>
                 <p>Добавьте товары, чтобы оформить заказ</p>
-                <button class="btn-secondary" onclick="showProduct()">Перейти к покупкам</button>
+                <button class="btn-secondary" onclick="showCatalog()">Перейти к покупкам</button>
             </div>
 
             <div id="cartContent" style="display: none;">
@@ -172,7 +168,7 @@
             <form id="checkoutForm" onsubmit="submitOrder(event)">
                 <div class="form-section">
                     <h3>Контактные данные</h3>
-                    
+
                     <div class="form-group">
                         <label for="customerName">Имя *</label>
                         <input type="text" id="customerName" required placeholder="Введите ваше имя">
@@ -191,7 +187,7 @@
 
                 <div class="form-section">
                     <h3>Адрес доставки</h3>
-                    
+
                     <div class="form-group">
                         <label for="city">Город *</label>
                         <input type="text" id="city" required placeholder="Москва">
